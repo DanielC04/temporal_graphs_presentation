@@ -130,15 +130,41 @@
   \end{tcolorbox}
 \end{frame}
 
-\begin{frame}{Journeys}
 
+
+
+
+
+\begin{frame}{Journeys}
+  \begin{tcolorbox}[definitionstyle, title=Definition: temporal/time respecting walk]
+    A \textbf{temporal} or \textbf{time-respecting walk} $W$ of a temporal graph $D = (V, A)$ is an alternating sequence of of nodes and times $(u_1 , t_1 , u_2 , t_2 , ... , u_{k−1} , t_{k−1} , u_k )$
+    where 
+    \begin{itemize}
+      \item $\forall 1 \leq i \leq k - 1: ((u_i , u_{i+1} ), t_i ) \in A$ and
+      \item $1 \leq i \leq k − 2: t_i < t_{i + 1}$
+    \end{itemize}
+  \end{tcolorbox}
+  \begin{itemize}
+    \item $t_1$ - departure time
+    \item $t_{k - 1}$ arrival time
+    \item $t_{k - 1} - t_1 + 1$ - duration/temporal length
+  \end{itemize}
 \end{frame}
 
+\begin{frame}{Journeys}
+  \begin{tcolorbox}[definitionstyle, title=Definition: Journey]
+    A \textbf{journey} is a is a temporal walk with pairwise distinct nodes \^{=} a journey of D is a path of the underlying static graph of D that uses
+strictly increasing edge-labels.
+  \end{tcolorbox}
+  \begin{tcolorbox}[definitionstyle, title=Definition: Foremost Journey]
+A u-v journey J is called foremost from time t ∈ IN if it
+departs after time t and its arrival time is minimized.
+  \end{tcolorbox}
 
+\end{frame}
 \section{Teasers}
 
 \begin{frame}{Graph Neural Networks}
-
 \end{frame}
 
 \begin{frame}{Sources}

@@ -1,9 +1,12 @@
 \documentclass{beamer}
 \usetheme{metropolis}           % Use metropolis theme
 \usepackage{graphicx} % For including images
+\usepackage{tikz}     % For positioning and layering
 \usepackage{url} % For handling URLs
 \usepackage{tcolorbox} % For creating pretty boxes
 \usepackage[numbers]{natbib} 
+\usepackage{caption}
+\usepackage{subcaption}
 % \usepackage[style=alphabetic]{biblatex}
 
 % Define a custom tcolorbox style for definitions
@@ -26,8 +29,9 @@
 \newcommand{\sourcefootnote}[1]{\let\thefootnote\relax\footnote{{\tiny Source: \url{#1}}}}
 
 \title{Temporal Graphs}
+% \subtitle{Algorithmic Gems for Graphs, Probabilities and Processes}
 
-\date{\today}
+\date{January 28, 2025}
 
 \author{Daniel Cermann}
 
@@ -55,22 +59,53 @@
 \section{Motivation}
 
 \begin{frame}{Clip: School day}
-  
+  \url{https://youtu.be/BSNJSUkc5-Q?t=996}
 \end{frame}
 
 \begin{frame}{Google Maps}
-  
+  \includegraphics[width=0.9\linewidth]{media/temporal_traffic_data.png} 
+  \sourcefootnote{https://australasiantransportresearchforum.org.au/wp-content/uploads/2022/03/ATRF2016_paper_166.pdf}
 \end{frame}
+
+\begin{frame}{Distributed systems}
+  \includegraphics[width=\linewidth]{media/massive_distributed_system.png}
+  \sourcefootnote{https://www.sg.ethz.ch/publications/2012/scholtes2012organic-design-of/}
+\end{frame}
+
+\begin{frame}{Temporal graphs for physical/chemical models}
+  \begin{center}
+  \includegraphics[width=0.8\linewidth]{media/organic_chemistry.png}
+  \end{center}
+  \sourcefootnote{https://pubs.acs.org/doi/full/10.1021/acs.est.3c00351}
+\end{frame}
+
 
 \begin{frame}{How to represent time in graphs?}
+    \centering
+    \begin{figure}
+        \begin{subfigure}{0.45\textwidth}
+            \centering
+            \includegraphics[width=\textwidth]{media/temporal_sense_1.png}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}{0.45\textwidth}
+            \centering
+            \includegraphics[width=\textwidth]{media/temporal_sense_2.png}
+        \end{subfigure}
 
+        \vspace{0.5cm} % Space between rows
+
+        \begin{subfigure}{0.45\textwidth}
+            \centering
+            \includegraphics[width=\textwidth]{media/temporal_sense_3.png}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}{0.45\textwidth}
+            \centering
+            \includegraphics[width=\textwidth]{media/temporal_sense_4.png}
+        \end{subfigure}
+    \end{figure}
 \end{frame}
-
-\begin{frame}{Time matters!}
-  - not transitive
-\end{frame}
-% insert some real-live applications here
-
 
 \section{How to model temporal graphs}
 \begin{frame}{Definition labeled graphs}
@@ -102,6 +137,10 @@
   \item $ \lambda_{max} = max\{l \in \lambda(E)\} $
   \item $\alpha(\lambda) = \lambda_{max} - \lambda_{min} + 1$ - lifetime of a temporal graph $\lambda(G)$
 \end{itemize}
+\end{frame}
+
+\begin{frame}{Time matters!}
+  - not transitive
 \end{frame}
 
 \begin{frame}{Notation #2}
@@ -157,14 +196,51 @@
 strictly increasing edge-labels.
   \end{tcolorbox}
   \begin{tcolorbox}[definitionstyle, title=Definition: Foremost Journey]
-A u-v journey J is called foremost from time t ∈ IN if it
-departs after time t and its arrival time is minimized.
+    A u-v journey J is called foremost from time $t \in \mathbb{N}$ if it departs after time t and its arrival time is minimized.
+  \end{tcolorbox}
+\end{frame}
+
+\begin{frame}{Computing foremost journeys - Problem formulation}
+
+\end{frame}
+\begin{frame}{Computing foremost journeys - Algorithm}
+  - k
+
+\end{frame}
+
+
+\begin{frame}{The government has been lying to us}
+  \includegraphics[width=0.9\linewidth]{media/image_1737738340.png}
+  \caption{You-are-here-maps are wrong!}
+\sourcefootnote{https://commons.wikimedia.org/wiki/File:Notting_Hill_Royal_Borough_Of_K\%26C_Council_Map_Outlining_the_Official_Area_of_Notting_Hill_and_the_Surrounding_Areas_2018.jpg}
+\end{frame}
+
+\begin{frame}{15 min walk}
+  \includegraphics[width=\linewidth]{media/15-min-walk.png}
+  \sourcefootnote{https://play.abstreet.org/0.3.49/fifteen_min.html}
+\end{frame}
+
+\begin{frame}{Reachability}
+  \begin{tcolorbox}[definitionstyle, title=Definition: Reachability]
   \end{tcolorbox}
 
 \end{frame}
-\section{Teasers}
 
-\begin{frame}{Graph Neural Networks}
+
+\section{Interesting problems on temporal graphs}
+\subsection{Extention of Dijkstra's algorithm to temporal graphs}
+
+\section{Temporal graphs for modeling dissemination processes}
+\begin{frame}{What are dissemination processes?}
+  \begin{itemize}
+    \item spread of rumors
+    \item spread of fake news
+    \item spread of diseases
+  \end{itemize}
+\end{frame}
+
+\section{Teasers}
+\begin{frame}{Temporal Graph Neural Networks}
 \end{frame}
 
 \begin{frame}{Sources}

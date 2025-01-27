@@ -22,7 +22,7 @@
   - proximity every x minutes
   - class mates
 - visualization possible
-- why interesting? INCREDICBLE story telling
+- why interesting? INCREDIBLE story telling
 - temporal graph rich in information
 - studying this: insights in 
 
@@ -126,4 +126,38 @@
 ### computing the foremost journey
 - problem statement:
   - given source node s and a start time $t$ compute the foremost s-w journey for all w \in V
-  -   
+
+## dissemination processes
+- never seen such a funny start of a paper section
+- deep down mathematicians are just gossips lol
+### what processes exist?
+- spread of information, rumor, fake news, disease, ...
+- commonly studied:
+  - spread research findings
+  - spread information or maybe even ad campaign in a social network
+- things that are studied (in the more traditional setting of dissemination):
+    - source of information
+    - medium of spread -> social network, publications
+    - timing
+- has been shown shown that underlying network structure can strongly affect dynamic processes -> big difference to analysis of static graph
+- network structure affects speed and extent of spreading
+### How to model dissemination processes with temporal graphs
+- Temporal graphs can model the spread of information
+- Nodes represent individuals/groups/organizations
+- Edges represent interactions
+- Time labels represent the time of interaction
+----
+- now, very concrete use case: vaccination problem
+### vaccination problem
+- refers to challenge of effectively planning and executing vaccination campaigns
+- we focus on theoretical analysis of temporal network to identify critical nodes and times
+- assumption: there are individuals who, through their behavior, are more likely than average to become infected and to spread the disease
+further
+
+### Neighbourhood vaccination protocol
+> choose a person at random among all persons that have been involved in at least one contact at time t*, ask her to name someone she met, vaccinate this other person, and repeat until a desired fraction of the vertices are vaccinated
+- 
+
+
+
+

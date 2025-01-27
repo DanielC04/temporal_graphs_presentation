@@ -6,6 +6,8 @@
 \usepackage{tcolorbox} % For creating pretty boxes
 \usepackage{caption}
 \usepackage{subcaption}
+\usepackage{tikz}
+\usetikzlibrary{graphs, positioning}
 
 % Hyperlinks
 \hypersetup{
@@ -23,7 +25,7 @@
 
 % Define a custom tcolorbox style for definitions
 \tcbset{
-    colframe=secondary,
+    colframe=blue!75!black,
     colback=bg,
     coltitle=primary,
     boxrule=1pt,
@@ -370,12 +372,104 @@ strictly increasing edge-labels.
 \end{frame}
 
 \begin{frame}{What are dissemination processes?}
-	\begin{itemize}
-		\item spread of rumors
-		\item spread of fake news
-		\item spread of diseases
-	\end{itemize}
+  \centering
+  \includegraphics[width=0.9\linewidth]{media/dissemination_process_graph.png}
+  \cite{fakeNews}
 \end{frame}
+\begin{frame}{What are dissemination processes?}
+  \includegraphics[width=\linewidth]{media/largeNetwork.png}
+  \sourcefootnote{https://www.cdc.gov/mmwr/volumes/69/wr/figures/mm6944a3-F1.gif?_=06726}
+\end{frame}
+\begin{frame}{Vaccination Problem}
+    \textbf{Definition:}
+    The vaccination problem involves optimizing the allocation and timing of vaccines to control the spread of infectious diseases.\\
+    \vspace{0.3cm} 
+    \textbf{Key Questions:}
+    \begin{itemize}
+        \item Who should be vaccinated first?
+        \item How can we minimize the spread of the disease?
+        \item What role does timing play in vaccination strategies?
+    \end{itemize}
+    \visible<2->{
+      \begin{tcolorbox}[title=Herd immunity]
+        \textbf{\textit{Herd immuntiy}} occurs when a large enough fraction $f$ of a community is immune to a disease, thus limiting its ability to spread.
+      \end{tcolorbox}
+    }
+    \visible<3->{
+      $\Rightarrow$ lower $f$ by vaccinating people in risk
+    }
+\end{frame}
+
+\begin{frame}{Vaccination Problem on static graphs}
+  \begin{tcolorbox}[title=Neighbourhood Vacination protocol]
+      choose a person at random among all persons that have been involved in at least one contact at time t*, ask her to name someone she met, vaccinate this other person, and repeat until a desired fraction of the vertices are vaccinated
+  \end{tcolorbox}
+
+  \begin{center}
+    \begin{tikzpicture}[node distance=1.5cm, every node/.style={draw, circle, minimum size=0.8cm}]
+        % Nodes
+        \node (A) {A}; % High-risk node
+        \node (B) [right of=A] {B};
+        \node (C) [below of=B] {C}; % High-risk node
+        \visible<3->{\node[fill=green!30] (C) [below of=B] {C};}; % High-risk node
+        \node (D) [below of=A] {D};
+        \node (E) [below of=C] {E};
+        \node (F) [right of=B] {F};
+        \visible<5, 6> {\node[fill=green!30] (F) [right of=B] {F};};
+        \node (G) [below of=F] {G};
+        \visible<2, 3> {\node[fill=blue!30] (G) [below of=F] {G};};
+        \node (I) [right of=F] {I};
+        \visible<4, 5>{\node[fill=blue!30] (I) [right of=F] {I};};
+
+        % Edges
+        \path (A) edge (B);
+        \path (A) edge (D);
+        \path (B) edge (C);
+        \path (B) edge (F);
+        \path (C) edge (D);
+        \path (C) edge (E);
+        \path (C) edge (G);
+        \path (F) edge (G);
+        \path (F) edge (I);
+   \end{tikzpicture}
+  \end{center}
+\end{frame}
+
+\begin{frame}{Modelling dissemination processes}
+  \begin{itemize}
+    \item Nodes represent individuals/groups/organizations
+    \item Edges represent interactions
+    \item Time labels represent the time of interaction
+  \end{itemize}
+  \visible<2->{
+  \begin{center}
+    \begin{tikzpicture}[node distance=2cm, every node/.style={draw, circle, minimum size=0.5cm}]
+        % Nodes
+        \node (A) {A}; % High-risk node
+        \node (B) [right of=A] {B};
+        \node (C) [below of=B] {C}; % High-risk node
+        \node (D) [below of=A] {D};
+        \node (E) [below of=C] {E};
+        \node (F) [right of=B] {F};
+        \node (G) [below of=F] {G};
+        \node (I) [right of=F] {I};
+
+        % Edges
+        \path (A) edge node[above, draw=none, font=\tiny, text=blue, inner sep=1pt] {1} (B);
+        \path (A) edge node[left, draw=none, font=\tiny, text=blue, inner sep=1pt] {1, 2} (D);
+        \path (B) edge node[left, draw=none, font=\tiny, text=blue, inner sep=1pt] {2, 4} (C);
+        \path (B) edge node[above, draw=none, font=\tiny, text=blue, inner sep=1pt] {1, 5} (F);
+        \path (C) edge node[above, draw=none, font=\tiny, text=blue, inner sep=1pt] {1, 2, 5} (D);
+        \path (C) edge node[left, draw=none, font=\tiny, text=blue, inner sep=1pt] {4, 5} (E);
+        \path (C) edge node[above, draw=none, font=\tiny, text=blue, inner sep=1pt] {5} (G);
+        \path (F) edge node[left, draw=none, font=\tiny, text=blue, inner sep=1pt] {3, 4} (G);
+        \path (F) edge node[above, draw=none, font=\tiny, text=blue, inner sep=1pt] {3, 4, 5} (I);
+   \end{tikzpicture}
+  \end{center}
+  }
+\end{frame}
+
+
 
 \section{Teasers}
 \begin{frame}{Centrality of nodes in a temporal graph}

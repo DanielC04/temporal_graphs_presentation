@@ -53,6 +53,12 @@
 - paper: how do chemicals react in dissolved organic matter !?
 - no more questions xD
 
+### dissemination processes
+- How does information, a disease, behaviour, ... spread over time in a network?
+- corona pandemics -> determine bottlenecks, who to vaccinate and accelerators
+- identify critical times and nodes
+- e.g. social media: understand spread of viral hashtag
+
 ### How to (visually) represent temporal graphs
 - normal graphs: strong representation
 - dilemma: how to show the third (temporal) dimension?
@@ -116,3 +122,8 @@
   -> note: therefore also all edges are distinct
 
 - central concept -> also exists on temporal graphs
+
+### computing the foremost journey
+- problem statement:
+  - given source node s and a start time $t$ compute the foremost s-w journey for all w \in V
+  -   

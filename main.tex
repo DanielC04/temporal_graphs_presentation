@@ -6,38 +6,35 @@
 \usepackage{tcolorbox} % For creating pretty boxes
 \usepackage{caption}
 \usepackage{subcaption}
-\usepackage[backend=biber]{biblatex} %Imports biblatex package
-\addbibresource{references.bib} %Import the bibliography file
 
+% Hyperlinks
+\hypersetup{
+    colorlinks=true,
+    linkcolor=secondary,
+    urlcolor=black,
+    citecolor=secondary
+}
+
+% Colors
+\definecolor{primary}{HTML}{23373B}
+\definecolor{secondary}{HTML}{38774D}
+\definecolor{accent}{HTML}{E74C3C}
+\definecolor{bg}{HTML}{ECF0F1}
 
 % Define a custom tcolorbox style for definitions
 \tcbset{
-		definitionstyle/.style={
-				colback=blue!5!white, % Background color
-				colframe=blue!75!black, % Border color
-				fonttitle=\bfseries, % Bold title
-				coltitle=white, % Title color
-				boxrule=0.75mm, % Border thickness
-				arc=2.5mm, % Rounded corners
-				left=2mm, % Left padding
-				right=2mm, % Right padding
-				top=1mm, % Top padding
-				bottom=1mm % Bottom padding
-		}
-}
-\tcbset{
-		theoremstyle/.style={
-				colback=black!5!white, % Background color
-				colframe=black!75!black, % Border color
-				fonttitle=\bfseries, % Bold title
-				coltitle=white, % Title color
-				boxrule=0.75mm, % Border thickness
-				arc=2.5mm, % Rounded corners
-				left=2mm, % Left padding
-				right=2mm, % Right padding
-				top=1mm, % Top padding
-				bottom=1mm % Bottom padding
-		}
+    colframe=secondary,
+    colback=bg,
+    coltitle=primary,
+    boxrule=1pt,
+    fonttitle=\bfseries, % Bold title
+    coltitle=white, % Title color
+    boxrule=0.75mm, % Border thickness
+    arc=2.5mm, % Rounded corners
+    left=2mm, % Left padding
+    right=2mm, % Right padding
+    top=1mm, % Top padding
+    bottom=1mm % Bottom padding
 }
 
 % for the sources of images: very small footnotes
@@ -45,7 +42,6 @@
 
 \title{Temporal Graphs}
 % \subtitle{Algorithmic Gems for Graphs, Probabilities and Processes}
-
 
 \date{January 28, 2025}
 
@@ -139,7 +135,7 @@
 
 \begin{frame}{Definition labeled and temporal graphs}
 	\visible<1->{
-		\begin{tcolorbox}[definitionstyle, title=Definition]
+		\begin{tcolorbox}[title=Definition]
 			A \textbf{labeled graph} \cite[page 94]{GHOSH201888} is a triple \( G = (V, E, \lambda) \) where:
 				\begin{itemize}
 						\item \( V, E \) is a graph
@@ -149,7 +145,7 @@
 		}
 
 	\visible<2->{
-	 \begin{tcolorbox}[definitionstyle, title=Definition]
+	 \begin{tcolorbox}[title=Definition]
 			A \textbf{temporal graph} \cite[page 243]{Michail2015} is is triple \( G = (V, E, \lambda) \) where:
 			\begin{itemize}
 						\item \( V, E \) is a graph
@@ -183,7 +179,7 @@
 \end{frame}
 
 \begin{frame}{Transitivity of reachability in static graphs}
-		\begin{tcolorbox}[theoremstyle, title=Reachability in a static graph is transitive]
+		\begin{tcolorbox}[title=Reachability in a static graph is transitive]
       Given A static graph $G = (V, E)$, for all nodes $A, B, C \in V$ we have:
       If B is reachable by A and C is reachable by B, then C is reachable by A. \\
       \begin{center}
@@ -245,7 +241,7 @@
 \end{frame}
 
 \begin{frame}{Static expansion of a temporal graph}
-	\begin{tcolorbox}[definitionstyle, title=Definition: static expansion of a graph]
+	\begin{tcolorbox}[title=Definition: static expansion of a graph]
 		The static expansion of a temporal graph $D = (V, A)$ with $V = \{ u_1, u_2, ..., u_n \}$ is a DAG $H = (S, E)$ with:
 		$$ S = \{ u_{ij} | \lambda_{min} - 1 \leq i \leq \lambda_{max}, 1 \leq j \leq n \} $$
 		and
@@ -268,7 +264,7 @@
 
 
 \begin{frame}{Journeys}
-	\begin{tcolorbox}[definitionstyle, title=Definition: temporal/time respecting walk]
+	\begin{tcolorbox}[title=Definition: temporal/time respecting walk]
 		A \textbf{temporal} or \textbf{time-respecting walk} $W$ of a temporal graph $D = (V, A)$ is an alternating sequence of of nodes and times $(u_1 , t_1 , u_2 , t_2 , ... , u_{k-1} , t_{k-1} , u_k )$
 		where 
 		\begin{itemize}
@@ -284,24 +280,24 @@
 \end{frame}
 
 \begin{frame}{Journeys}
-	\begin{tcolorbox}[definitionstyle, title=Definition: Journey]
+	\begin{tcolorbox}[title=Definition: Journey]
 		A \textbf{journey} is a is a temporal walk with pairwise distinct nodes \^{=} a journey of D is a path of the underlying static graph of D that uses
 strictly increasing edge-labels.
 	\end{tcolorbox}
 
 	\visible<2->{
-    \begin{tcolorbox}[definitionstyle, title=Definition: Foremost Journey]
+    \begin{tcolorbox}[title=Definition: Foremost Journey]
       A u-v journey J is called foremost from time $t \in \mathbb{N}$ if it departs after time t and its arrival time is minimized.
     \end{tcolorbox}
   }
 \end{frame}
 
 \begin{frame}{Journeys}
-	\begin{tcolorbox}[definitionstyle, title=Definition: Temporal distance]
+	\begin{tcolorbox}[title=Definition: Temporal distance]
     The \textbf{temporal distance} from a node $u$ to at time $t$ to a node $v$ is defined as the duration of a foremost journey from $u$ to $v$ that departs at time $t$.
 	\end{tcolorbox}
 	\visible<2->{
-	  \begin{tcolorbox}[definitionstyle, title=Definition: Temporal diameter $d$]
+	  \begin{tcolorbox}[title=Definition: Temporal diameter $d$]
      The minimum integer $d$ such that there exists a foremost journey from every node $(u, t) \in V \times \{ 0, 1, ..., \alpha - d \}$  to every node $v \in V$ with duration at most $d$.
   	\end{tcolorbox}
   }
@@ -311,27 +307,31 @@ strictly increasing edge-labels.
 
 \begin{frame}{Computing foremost journeys - Problem formulation}
   \begin{center}
-    Given a source node $s \in V$ and a start time $t_{start}$ compute the foremost $s-w$ journey for all $w \in V \textbackslash{} \{ s \}$
+    Given a source node $s \in V$ and a start time $t_{start}$ compute the foremost $s-w$ journey for all $w \in V \text{\textbackslash{}} \{ s \}$
   \end{center}
 \end{frame}
 
 \begin{frame}{Sidenote - offline vs. online algorithms}
   \begin{minipage}{0.45\textwidth}
     \underline{offline algorithms}
-    \begin{center}
-      takes whole temporal graph $D$ as input
-    \end{center}
+    \begin{quote}
+      takes whole temporal graph $D$ as input\\
+    \end{quote}
+    \includegraphics[width=\linewidth]{media/offline_algorithm.png}
   \end{minipage} \hfill 
   \begin{minipage}{0.45\textwidth}
     \underline{online algorithms}
     \begin{quote}
     temporal graph is revealed to algorithm over time
     \end{quote}
+    \includegraphics[width=\linewidth]{media/online_algo.png}
   \end{minipage}
+  \sourcefootnote{https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbpwyZnBM48yDEHLT9Sww1J8AJrgs4lj-VLi2EkxpIoKMeI6-stF-R9uAsLl5K4gXFBts&usqp=CAU}
 \end{frame}
 
 \begin{frame}{Computing foremost journeys - Algorithm}
-
+  \includegraphics[width=\linewidth]{media/foremost_journey_algorithm.png}
+  \cite[page 724]{PathProblems}
 \end{frame}
 
 \begin{frame}{Computing foremost journeys - Proof of correctness}
@@ -340,6 +340,12 @@ strictly increasing edge-labels.
 \end{frame}
 \begin{frame}{Computing foremost journeys - Running time}
 
+\end{frame}
+
+\begin{frame}{Reachability}
+	\begin{tcolorbox}[title=Definition: Reachability]
+    A vertex $v$ is \textbf{reachable} from a vertex $u$ at time $t$ if there exists a foremost journey from $u$ to $v$ that departs at time $t$.
+	\end{tcolorbox}
 \end{frame}
 
 
@@ -357,12 +363,6 @@ strictly increasing edge-labels.
 	\sourcefootnote{https://play.abstreet.org/0.3.49/fifteen_min.html}
 \end{frame}
 
-\begin{frame}{Reachability}
-	\begin{tcolorbox}[definitionstyle, title=Definition: Reachability]
-	\end{tcolorbox}
-
-\end{frame}
-
 
 \section{Temporal graphs for modeling dissemination processes}
 \begin{frame}
@@ -378,11 +378,16 @@ strictly increasing edge-labels.
 \end{frame}
 
 \section{Teasers}
+\begin{frame}{Centrality of nodes in a temporal graph}
+
+\end{frame}
+
 \begin{frame}{Temporal Graph Neural Networks}
 \end{frame}
 
 \begin{frame}{Sources}
-	\printbibliography
+  \bibliographystyle{plain} % Choose a bibliography style
+  \bibliography{references} % Path to your .bib file
 \end{frame}
 
 \end{document}

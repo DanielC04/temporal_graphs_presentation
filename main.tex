@@ -98,6 +98,47 @@
   \sourcefootnote{https://engineering.berkeley.edu/wp-content/uploads/2020/03/CoronApp.png}
 \end{frame}
 
+\section{How to model temporal graphs}
+
+\begin{frame}{How to represent time in graphs?}
+  \large 
+  \italic{Brainstorm with your neighbor how time can be represented in graphs. Don't think of notation for now, just some visual ways to represent the additional dimension.}
+  \tiny \hfill $\approx$ 2 min \\[3ex]
+  \centering
+  \begin{minipage}{0.6\textwidth}
+  \begin{center}
+    \begin{tikzpicture}[node distance=1.5cm, every node/.style={draw, circle, minimum size=0.8cm}]
+        % Nodes
+        \node (A) {A}; % High-risk node
+        \node (B) [right of=A] {B};
+        \node (C) [below of=B] {C}; % High-risk node
+        \node (D) [below of=A] {D};
+        \node (E) [below of=C] {E};
+        \node (F) [right of=B] {F};
+        \node (G) [below of=F] {G};
+        \node (H) [right of=F] {H};
+
+        % Edges
+        \path (A) edge (B);
+        \path (A) edge (D);
+        \path (B) edge (C);
+        \path (B) edge (F);
+        \path (C) edge (D);
+        \path (C) edge (E);
+        \path (C) edge (G);
+        \path (F) edge (G);
+        \path (F) edge (H);
+   \end{tikzpicture}
+  \end{center}
+  \end{minipage}
+  \begin{minipage}{0.1\textwidth}
+    \large +
+  \end{minipage}
+  \begin{minipage}{0.2\textwidth}
+    \large ?
+  \end{minipage}
+\end{frame}
+
 
 \begin{frame}{How to represent time in graphs?}
 		\centering
@@ -127,7 +168,6 @@
 		\end{figure}
 \end{frame}
 
-\section{How to model temporal graphs}
 \begin{frame}{How to model temporal graphs}
 	\centering
 	\includegraphics[width=0.9\linewidth]{media/temporal_sense_2.png}
@@ -167,6 +207,53 @@
   \includegraphics[width=\linewidth]{media/edge_coloring_to_temporal_graph.png}
   \sourcefootnote{me :)}
   \end{minipage}
+\end{frame}
+
+\begin{frame}{Exercise notation}
+  \large
+  \italic{Given the following temporal graph definition $D = (V, E, \lambda)$ draw the visual representation of the temporal graph like in the previous example!} \hfill \tiny 2 min \\
+  \normal
+  $$ V = \{ C, H, B, P, M, G, W \} $$
+  $$ E = \{ (C, H), (H, B), (B, G), (G, W), (W, P), (H, P), (B, M), (M, G) \} $$
+  $ \lambda: E \rightarrow 2^{\mathbb{N}} = \{ \newline
+    \hspace*{1cm}  (C, H) \mapsto \{ 4, 6 \}, \newline
+    \hspace*{1cm}  (H, B) \mapsto \{ 4, 6 \}, \newline
+    \hspace*{1cm}  (B, G) \mapsto \{ 4, 6 \}, \newline
+    \hspace*{1cm}  (G, W) \mapsto \{ 4, 6 \}, \newline
+    \hspace*{1cm}  (W, P) \mapsto \{ 4, 6 \}, \newline 
+    \hspace*{1cm}  (H, P) \mapsto \{ 4, 6 \}, \newline
+    \hspace*{1cm}  (B, M) \mapsto \{ 4, 6 \}, \newline
+    \hspace*{1cm}  (M, G) \mapsto \{ 4, 6 \} \newline
+        \} $
+
+\end{frame}
+\begin{frame}{Solution}
+  \begin{tikzpicture}[
+      every node/.style={circle, draw, minimum size=1cm, font=\small},
+      every edge/.style={draw, ->, font=\footnotesize},
+      >=stealth
+  ]
+
+  % Define vertices
+  \node (C) at (0, 2) {C};
+  \node (H) at (2, 4) {H};
+  \node (B) at (4, 2) {B};
+  \node (G) at (6, 4) {G};
+  \node (W) at (8, 2) {W};
+  \node (P) at (4, 0) {P};
+  \node (M) at (6, 0) {M};
+
+  % Define edges with timestamps
+  \path[->] (C) edge node[above left] {\{4, 6\}} (H);
+  \path[->] (H) edge node[above right] {\{4, 6\}} (B);
+  \path[->] (B) edge node[above left] {\{4, 6\}} (G);
+  \path[->] (G) edge node[above right] {\{4, 6\}} (W);
+  \path[->] (W) edge node[below] {\{4, 6\}} (P);
+  \path[->] (H) edge node[left] {\{4, 6\}} (P);
+  \path[->] (B) edge node[below] {\{4, 6\}} (M);
+  \path[->] (M) edge node[below right] {\{4, 6\}} (G);
+
+  \end{tikzpicture}
 \end{frame}
 
 \begin{frame}{Notation for convenience $\rightarrow$ \cite[p. 243ff]{Michail2015}}
@@ -392,12 +479,19 @@ strictly increasing edge-labels.
     \end{itemize}
     \visible<2->{
       \begin{tcolorbox}[title=Herd immunity]
-        \textbf{\textit{Herd immuntiy}} occurs when a large enough fraction $f$ of a community is immune to a disease, thus limiting its ability to spread.
+        \textbf{\textit{Herd immunity}} occurs when a large enough fraction $f$ of a community is immune to a disease, thus limiting its ability to spread.
       \end{tcolorbox}
     }
     \visible<3->{
       $\Rightarrow$ lower $f$ by vaccinating people in risk
     }
+\end{frame}
+
+\begin{frame}[<+->]{Vaccination Problem - technical problem statement }
+  \centering
+  \begin{minipage}{0.6\textwidth}
+    \large How can we \underline{optimally} chooose a fraction $f$ of a population to vaccinate using only \underline{local information}?
+  \end{minipage}
 \end{frame}
 
 \begin{frame}{Vaccination Problem on static graphs}
@@ -418,8 +512,8 @@ strictly increasing edge-labels.
         \visible<5, 6> {\node[fill=green!30] (F) [right of=B] {F};};
         \node (G) [below of=F] {G};
         \visible<2, 3> {\node[fill=blue!30] (G) [below of=F] {G};};
-        \node (I) [right of=F] {I};
-        \visible<4, 5>{\node[fill=blue!30] (I) [right of=F] {I};};
+        \node (H) [right of=F] {H};
+        \visible<4, 5>{\node[fill=blue!30] (I) [right of=F] {H};};
 
         % Edges
         \path (A) edge (B);
@@ -430,7 +524,7 @@ strictly increasing edge-labels.
         \path (C) edge (E);
         \path (C) edge (G);
         \path (F) edge (G);
-        \path (F) edge (I);
+        \path (F) edge (H);
    \end{tikzpicture}
   \end{center}
 \end{frame}
@@ -452,7 +546,7 @@ strictly increasing edge-labels.
         \node (E) [below of=C] {E};
         \node (F) [right of=B] {F};
         \node (G) [below of=F] {G};
-        \node (I) [right of=F] {I};
+        \node (H) [right of=F] {H};
 
         % Edges
         \path (A) edge node[above, draw=none, font=\tiny, text=blue, inner sep=1pt] {1} (B);
@@ -463,10 +557,58 @@ strictly increasing edge-labels.
         \path (C) edge node[left, draw=none, font=\tiny, text=blue, inner sep=1pt] {4, 5} (E);
         \path (C) edge node[above, draw=none, font=\tiny, text=blue, inner sep=1pt] {5} (G);
         \path (F) edge node[left, draw=none, font=\tiny, text=blue, inner sep=1pt] {3, 4} (G);
-        \path (F) edge node[above, draw=none, font=\tiny, text=blue, inner sep=1pt] {3, 4, 5} (I);
+        \path (F) edge node[above, draw=none, font=\tiny, text=blue, inner sep=1pt] {3, 5} (H);
    \end{tikzpicture}
   \end{center}
   }
+\end{frame}
+
+\begin{frame}{The infection process}
+  \centering
+  \includegraphics[width=0.6\linewidth]{media/infection_process_a.png} 
+
+  \includegraphics[width=0.6\linewidth]{media/infection_process_b.png} \\
+  \cite{Lee_2012}
+\end{frame}
+
+\begin{frame}{Protocols for vaccination in temporal graphs}
+  \centering 
+  \begin{minipage}{0.8\textwidth}
+  \large
+  Brainstorm protocols that could be used to vaccinate individuals in a temporal graph. \\
+  Use the neighbourhood vaccination protocol from static graphs as inspiration. \\
+  \visible<2>{
+    \includegraphics[width=\linewidth]{media/infection_process_b.png} \\
+  }
+  \small
+  \hfill 4 min
+  \end{minipage}
+\end{frame}
+\begin{frame}{Protocols for vaccination in temporal graphs}
+  \begin{minipage}{0.45\textwidth}
+    \textbf{\textit{Recent protocol}}  \\
+    \italic{iteratively ask a random individual $I$ to name the most recent contact and vaccinated this person}
+  \end{minipage}
+  \hfill 
+  \begin{minipage}{0.45\textwidth}
+    \textbf{\textit{Weight protocol}} \\
+    \italic{iteratively asked a random individual $I$ to name its most frequent contact since some time $t$ in the past}
+  \end{minipage}
+  \vspace*{2cm}
+  \visible<2->{
+    Apply those two protocols to the given temporal graphs on your handout. Then, discuss how the performance of the protocols might scale in real-world data (e.g. contacts in hospital, on a dating website, ...). \hfill \small \textit{6min}
+  }
+\end{frame}
+
+\begin{frame}{Solution}
+  \includegraphics[width=\linewidth]{media/solution_recent.png}
+  \includegraphics[width=\linewidth]{media/solution_weight.png} 
+\end{frame}
+
+\begin{frame}{Performance on bigger datasets}
+  \centering
+  \includegraphics[width=0.6\linewidth]{media/performance_protocols.png}
+  \cite{Lee_2012}
 \end{frame}
 
 
@@ -479,7 +621,7 @@ strictly increasing edge-labels.
 \begin{frame}{Temporal Graph Neural Networks}
 \end{frame}
 
-\begin{frame}{Sources}
+\begin{frame}[allowframebreaks]{Sources}
   \bibliographystyle{plain} % Choose a bibliography style
   \bibliography{references} % Path to your .bib file
 \end{frame}

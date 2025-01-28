@@ -1,5 +1,4 @@
-
-\documentclass[12pt,a4paper]{article}
+\documentclass[11pt,a4paper]{article}
 
 % Package imports
 \usepackage[utf8]{inputenc}
@@ -13,11 +12,14 @@
 \usepackage{hyperref}
 \usepackage{enumitem}
 \usepackage{fancyhdr}
+\usepackage{tikz}     % For positioning and layering
+\usetikzlibrary{arrows.meta}
+\usetikzlibrary{graphs, positioning}
 
 % Page layout
-\geometry{top=1in, bottom=1in, left=1in, right=1in}
-\setlength{\parskip}{1em}
+\geometry{top=0.8in, bottom=0.6in, left=0.8in, right=0.8in}
 \setlength{\parindent}{0em}
+\setlength{\parskip}{0.5em}
 
 % Colors
 \definecolor{primary}{HTML}{23373B}
@@ -42,21 +44,29 @@
 \tcbset{
     colframe=secondary,
     colback=bg,
-    coltitle=primary,
+    coltitle=white,
     boxrule=1pt,
-    left=1em,
-    right=1em,
-    top=0.4em,
-    bottom=0.4em
+    left=0.5em,
+    right=0.5em,
+    top=0.2em,
+    bottom=0.2em
 }
+\setlist{itemsep=0.2em, topsep=0.2em}
+
+\titlespacing{\section}{0pt}{*0.5}{*0.5}
+\titlespacing{\subsection}{0pt}{*0.4}{*0.4}
+\titlespacing{\subsubsection}{0pt}{*0.3}{*0.3}
 
 \pagestyle{fancy}
+
 \fancyhf{} % Clear header and footer
 \fancyhead[L]{\textbf{\color{primary}Daniel Cermann}} % Left header
 \fancyhead[R]{\textbf{\color{primary} January 28, 2025}} % Right header
 
 % Document starts here
 \begin{document}
+
+\nocite{*}
 
 \thispagestyle{empty}
 % Title
@@ -68,33 +78,52 @@
     \rule{\textwidth}{0.5pt}
 \end{center}
 \section{Motivation}
+\begin{minipage}{0.6\textwidth}
 \begin{itemize}
   \item Route finding in transportation networks
   \item distributed networks $\rightarrow$ analysis of various properties
   \item dissemination processes
 \end{itemize}
+\end{minipage}
+\begin{minipage}{0.39\textwidth}
+  \includegraphics[width=0.9\textwidth]{media/corona.png}
+\end{minipage}
 
 
-\section{Basic Terms and definitions}
+\section{Basic terms and definitions}
 
-\begin{tcolorbox}[title=Definition]
-  A \textbf{labeled graph} \cite[page 94]{GHOSH201888} is a triple \( G = (V, E, \lambda) \) where:
-    \begin{itemize}
-        \item \( V, E \) is a graph
-        \item $ \lambda: V \cup E \rightarrow Z$ is a mapping of nodes and edges to a set of labels $Z$
-      \end{itemize}
-\end{tcolorbox}
-\begin{tcolorbox}[title=Definition]
+\begin{tcolorbox}[title=Definition temporal graph]
   A \textbf{temporal graph} \cite[page 243]{Michail2015} is is triple \( G = (V, E, \lambda) \) where:
   \begin{itemize}
-        \item \( V, E \) is a graph
-        \item $ \lambda: E \rightarrow 2^{\mathbb{N}}$ is a mapping edges to a set natural numbers (time steps when this edge is active)
+        \item \( (V, E) \) is a graph
+        \item $ \lambda: E \rightarrow 2^{\mathbb{N}}$ is a mapping of edges to a set natural numbers (time steps when this edge is active)
       \end{itemize}
 \end{tcolorbox}
 
-\subsection{Notation for convenience $\rightarrow$ \cite[p. 243ff]{Michail2015}}
+\subsection{Exercise}
+\begin{center}
+  \scalebox{1.5}{
+  \begin{tikzpicture}[
+      every node/.style={circle, draw, minimum size=0.3cm, font=\small},
+      every edge/.style={draw, ->, font=\tiny},
+      labelstyle/.style={draw=none, font=\tiny, midway, maximum size=0.3cm, inner sep=0.1pt},
+      >=stealth
+  ]
+  % Define vertices
+  \node (C) at (0, 0) {C};
+  \node (H) at (2, 0) {H};
+  \node (B) at (4, 0) {B};
+  \node (G) at (6, 0) {G};
+  \node (W) at (8, 0) {W};
+  \node (P) at (5, 3) {P};
+  \node (M) at (5, -2) {M};
+  \end{tikzpicture}}
+\end{center}
+
+
+\subsection{Notation for convenience $\rightarrow$ \cite[p. 243ff]{Michail2015}  \hfill { \small \color{black} for above temporal graph: }}
 \begin{itemize}
-	\item $\lambda(G)$ - temporal graph with respect to $G$
+	\item $\lambda(G)$ - temporal graph with respect to $G$ 
 	\item $\lambda(E)$ - multiset of all labels
 	\item $| \lambda | = \sum_{e \in E} | \lambda(e) | $
 	\item $ \lambda_{min} = min\{l \in \lambda(E)\} $
@@ -109,6 +138,32 @@
   $$ E = \{ (u_{(i - 1)j}, u_{ij'}) | \lambda_{min} \leq i \leq \lambda_{max} \land $$
   $$ 1 \leq j, j' \leq n \land (j = j' \lor (u_j, u_{j'}) \in A(i))) \} $$
 \end{tcolorbox}
+
+\begin{center}
+  \scalebox{1.5}{
+  \begin{tikzpicture}
+  \tikzset{every arrow/.append style={arrowhead=1cm}} % Adjust scale as needed
+  % Define grid size
+  \def\rows{6} % number of rows
+  \def\cols{8} % number of columns
+
+  % Create nodes in a grid as small points
+  \foreach \i in {1, ..., \rows} {
+      \foreach \j in {1, ..., \cols} {
+          \node[fill=black, circle, inner sep=1pt] at (\j, -\i) {}; % small points
+      }
+      \draw[dashed, gray] (0.5, -\i) -- (\cols, -\i); % horizontal grid lines
+      \node at(\i, -\rows - 0.5) {\i}; % row numbers
+  }
+  \node (labelC) at (0, -1) {C};
+  \node (labelH) at (0, -2) {H};
+  \node (labelB) at (0, -3) {B};
+  \node (labelG) at (0, -4) {G};
+  \node (labelW) at (0, -5) {W};
+  \node (labelP) at (0, -6) {P};
+  \end{tikzpicture}}
+\end{center}
+
 \section{Journeys}
 \begin{tcolorbox}[title=Definition: temporal/time respecting walk]
   A \textbf{temporal} or \textbf{time-respecting walk} $W$ of a temporal graph $D = (V, A)$ is an alternating sequence of of nodes and times $(u_1 , t_1 , u_2 , t_2 , ... , u_{k-1} , t_{k-1} , u_k )$
@@ -139,6 +194,21 @@ strictly increasing edge-labels.
 \begin{tcolorbox}[title=Definition: Temporal diameter $d$]
   The minimum integer $d$ such that there exists a foremost journey from every node $(u, t) \in V \times \{ 0, 1, ..., \alpha - d \}$  to every node $v \in V$ with duration at most $d$.
 \end{tcolorbox}
+
+\section{Dissemination processes}
+\begin{itemize}
+  \item studies spread of information, rumor, fake news, disease, ...
+\end{itemize}
+\bold\textit{{Vaccination Problem}}: The vaccination problem involves optimizing the allocation and timing of vaccines to control the spread of infectious diseases.\\
+\begin{tcolorbox}[title=Neighbourhood Vacination protocol]
+    choose a person at random among all persons that have been involved in at least one contact at time t*, ask her to name someone she met, vaccinate this other person, and repeat until a desired fraction of the vertices are vaccinated
+\end{tcolorbox}
+\subsection{Exercise}
+\includegraphics[width=0.9\textwidth]{media/infection_process_a.png}\\
+\includegraphics[width=0.9\textwidth]{media/infection_process_a.png}
+
+
+\newpage
 
 \bibliographystyle{plain} % Choose a bibliography style
 \bibliography{references} % Path to your .bib file

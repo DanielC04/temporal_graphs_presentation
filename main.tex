@@ -2,8 +2,11 @@
 \usetheme{metropolis}           % Use metropolis theme
 \usepackage{graphicx} % For including images
 \usepackage{tikz}     % For positioning and layering
+\usetikzlibrary{arrows.meta}
+\usepackage{transparent}
 \usepackage{url} % For handling URLs
 \usepackage{tcolorbox} % For creating pretty boxes
+\usetikzlibrary{backgrounds}
 \usepackage{caption}
 \usepackage{subcaption}
 \usepackage{tikz}
@@ -60,7 +63,7 @@
 
 \begin{document}
 
-\begin{frame}
+\begin{frame}[label=potsdam_map]
 	\begin{center}
 		\includegraphics[width=0.95\textwidth]{media/potsdam_citynet.png}
 	\end{center}
@@ -211,50 +214,72 @@
 
 \begin{frame}{Exercise notation}
   \large
-  \italic{Given the following temporal graph definition $D = (V, E, \lambda)$ draw the visual representation of the temporal graph like in the previous example!} \hfill \tiny 2 min \\
+  \italic{Given the following temporal graph definition $D = (V, E, \lambda)$ draw the visual representation of the temporal graph on the template in the handout!} \hfill \tiny $\approx$ 2 min \\
   \normal
   $$ V = \{ C, H, B, P, M, G, W \} $$
-  $$ E = \{ (C, H), (H, B), (B, G), (G, W), (W, P), (H, P), (B, M), (M, G) \} $$
-  $ \lambda: E \rightarrow 2^{\mathbb{N}} = \{ \newline
-    \hspace*{1cm}  (C, H) \mapsto \{ 4, 6 \}, \newline
-    \hspace*{1cm}  (H, B) \mapsto \{ 4, 6 \}, \newline
-    \hspace*{1cm}  (B, G) \mapsto \{ 4, 6 \}, \newline
-    \hspace*{1cm}  (G, W) \mapsto \{ 4, 6 \}, \newline
-    \hspace*{1cm}  (W, P) \mapsto \{ 4, 6 \}, \newline 
-    \hspace*{1cm}  (H, P) \mapsto \{ 4, 6 \}, \newline
-    \hspace*{1cm}  (B, M) \mapsto \{ 4, 6 \}, \newline
-    \hspace*{1cm}  (M, G) \mapsto \{ 4, 6 \} \newline
-        \} $
-
+  $$ E = \{ (C, H), (H, B), (B, G), (G, W), (W, P), (H, P), (B, M), (M, G) $$
+  $$  \qquad (H, C), (B, H), (G, H), (W, G), (P, W), (P, H), (M, B), (G, M) \} $$
+  \hfill \begin{minipage}{0.6\textwidth}
+  $ \lambda = \{ \newline
+    \hspace*{1cm}  (C, H) \mapsto \{ 1, 4 \}, \newline
+    \hspace*{1cm}  (H, C) \mapsto \{ 4, 7 \}, \newline
+    \hspace*{1cm}  (H, B) \mapsto \{ 2, 5 \}, \newline
+    \hspace*{1cm}  (B, H) \mapsto \{ 3, 6 \}, \newline
+    \hspace*{1cm}  (B, G) \mapsto \{ 3, 6 \}, \newline
+    \hspace*{1cm}  (G, B) \mapsto \{ 2, 5 \}, \newline
+    \hspace*{1cm}  (G, W) \mapsto \{ 4, 7 \}, \newline
+    \hspace*{1cm}  (W, G) \mapsto \{ 1, 4 \}, \newline
+    \hspace*{1cm}  (H, M) \mapsto \{ 2, 5 \}, \newline
+    \hspace*{1cm}  (M, H) \mapsto \{ 3, 6 \}, \newline
+    \hspace*{1cm}  (M, W) \mapsto \{ 3, 6 \} \newline
+    \hspace*{1cm}  (W, M) \mapsto \{ 2, 5 \} \newline
+    \hspace*{1cm}  (B, P) \mapsto \{ 1, 4, 7 \} \newline
+    \hspace*{1cm}  (P, B) \mapsto \{ 2, 5, 8 \} \newline
+    \hspace*{1cm}  (G, P) \mapsto \{ 2, 5, 8 \} \newline
+    \hspace*{1cm}  (P, G) \mapsto \{ 1, 4, 7 \} \newline
+        \} $ 
+  \end{minipage} \hfill
 \end{frame}
-\begin{frame}{Solution}
-  \begin{tikzpicture}[
-      every node/.style={circle, draw, minimum size=1cm, font=\small},
-      every edge/.style={draw, ->, font=\footnotesize},
-      >=stealth
-  ]
 
-  % Define vertices
-  \node (C) at (0, 2) {C};
-  \node (H) at (2, 4) {H};
-  \node (B) at (4, 2) {B};
-  \node (G) at (6, 4) {G};
-  \node (W) at (8, 2) {W};
-  \node (P) at (4, 0) {P};
-  \node (M) at (6, 0) {M};
+\begin{frame}[label=potsdam_city_graph]{Solution}
+\begin{tikzpicture}[
+    every node/.style={circle, draw, minimum size=0.3cm, font=\small},
+    every edge/.style={draw, ->, font=\tiny},
+    labelstyle/.style={draw=none, font=\tiny, midway, maximum size=0.3cm, inner sep=0.1pt},
+    >=stealth
+]
 
-  % Define edges with timestamps
-  \path[->] (C) edge node[above left] {\{4, 6\}} (H);
-  \path[->] (H) edge node[above right] {\{4, 6\}} (B);
-  \path[->] (B) edge node[above left] {\{4, 6\}} (G);
-  \path[->] (G) edge node[above right] {\{4, 6\}} (W);
-  \path[->] (W) edge node[below] {\{4, 6\}} (P);
-  \path[->] (H) edge node[left] {\{4, 6\}} (P);
-  \path[->] (B) edge node[below] {\{4, 6\}} (M);
-  \path[->] (M) edge node[below right] {\{4, 6\}} (G);
+% Define vertices
+\node (C) at (0, 0) {C};
+\node (H) at (2, 0) {H};
+\node (B) at (4, 0) {B};
+\node (G) at (6, 0) {G};
+\node (W) at (8, 0) {W};
+\node (P) at (5, 3) {P};
+\node (M) at (5, -2) {M};
 
-  \end{tikzpicture}
+% Define edges with timestamps using 'labelstyle'
+\draw[->, bend right=15] (C) to node[labelstyle, below] {1, 4} (H);
+\draw[->, bend right=15] (H) to node[labelstyle, above] {4, 7} (C);
+\draw[->, bend right=15] (B) to node[labelstyle, above] {3, 6} (H);
+\draw[->, bend right=15] (H) to node[labelstyle, above] {2, 5} (B);
+\draw[->, bend right=15] (B) to node[labelstyle, below] {3, 6} (G);
+\draw[->, bend right=15] (G) to node[labelstyle, above] {2, 5} (B);
+\draw[->, bend right=15] (W) to node[labelstyle, above] {1, 4} (G);
+\draw[->, bend right=15] (G) to node[labelstyle, above] {4, 7} (W);
+\draw[->, bend right=15] (B) to node[labelstyle, above] {1, 4, 7} (P);
+\draw[->, bend right=15] (P) to node[labelstyle, left] {2, 5, 8} (B);
+\draw[->, bend right=15] (G) to node[labelstyle, right] {1, 4, 7} (P);
+\draw[->, bend right=15] (P) to node[labelstyle, below] {2, 5, 8} (G);
+\draw[->, bend right=15] (H) to node[labelstyle] {1, 4, 7} (M);
+\draw[->, bend right=15] (M) to node[labelstyle] {2, 5, 8} (H);
+\draw[->, bend right=15] (W) to node[labelstyle] {1, 4, 7} (M);
+\draw[->, bend right=15] (M) to node[labelstyle] {2, 5, 8} (W);
+\end{tikzpicture}
 \end{frame}
+
+\againframe{potsdam_map}
+\againframe{potsdam_city_graph}
 
 \begin{frame}{Notation for convenience $\rightarrow$ \cite[p. 243ff]{Michail2015}}
 \begin{itemize}
@@ -338,6 +363,79 @@
 		$$ 1 \leq j, j' \leq n \land (j = j' \lor (u_j, u_{j'}) \in A(i))) \} $$
 	\end{tcolorbox}
 \end{frame}
+
+\begin{frame}{Exercise: Static expansion of a temporal graph}
+  \large
+  \centering
+  Turn the Potsdam-Map temporal graph into its static expansion using the template given on the handout (we leave out M(edienstadt Babelsberg) for simplicity sake here) !\\
+  \hfill \tiny $\approx$ 3 min
+\end{frame}
+\begin{frame}{Solution: Static expansion of a temporal graph}
+\begin{tikzpicture}
+\tikzset{every arrow/.append style={arrowhead=1cm}} % Adjust scale as needed
+% Define grid size
+\def\rows{6} % number of rows
+\def\cols{8} % number of columns
+
+% Create nodes in a grid as small points
+\foreach \i in {1, ..., \rows} {
+    \foreach \j in {1, ..., \cols} {
+        \node[fill=black, circle, inner sep=1pt] at (\j, -\i) {}; % small points
+    }
+    \draw[dashed, gray] (0.5, -\i) -- (\cols, -\i); % horizontal grid lines
+    \node at(\i, -\rows - 0.5) {\i}; % row numbers
+}
+\node (labelC) at (0, -1) {C};
+\node (labelH) at (0, -2) {H};
+\node (labelB) at (0, -3) {B};
+\node (labelG) at (0, -4) {G};
+\node (labelW) at (0, -5) {W};
+\node (labelP) at (0, -6) {P};
+
+% C -> H
+\draw[-{Latex[width=2mm]}] (1, -1) -- (1, -2);
+\draw[-{Latex[width=2mm]}, bend right=20] (4, -1) -- (4, -2);
+% H -> B
+\draw[-{Latex[width=2mm]}] (2, -2) -- (2, -3);
+\draw[-{Latex[width=2mm]}] (5, -2) -- (5, -3);
+% B -> G
+\draw[-{Latex[width=2mm]}] (3, -3) -- (3, -4);
+\draw[-{Latex[width=2mm]}] (6, -3) -- (6, -4);
+% G -> W
+\draw[-{Latex[width=2mm]}, bend right=20] (4, -4) to (4, -5);
+\draw[-{Latex[width=2mm]}] (7, -4) -- (7, -5);
+% W -> G
+\draw[-{Latex[width=2mm]}] (1, -5) to (1, -4);
+\draw[-{Latex[width=2mm]}, bend right=20] (4, -5) to (4, -4);
+% G -> B
+\draw[-{Latex[width=2mm]}] (2, -4) to (2, -3);
+\draw[-{Latex[width=2mm]}] (5, -4) to (5, -3);
+% B -> H
+\draw[-{Latex[width=2mm]}] (3, -3) to (3, -2);
+\draw[-{Latex[width=2mm]}] (6, -3) to (6, -2);
+% H -> C
+\draw[-{Latex[width=2mm]}] (4, -2) to (4, -1);
+\draw[-{Latex[width=2mm]}] (7, -2) to (7, -1);
+% P -> B
+\draw[-{Latex[width=2mm]}, bend left=10] (2, -6) to (2, -2);
+\draw[-{Latex[width=2mm]}, bend left=10] (5, -6) to (5, -2);
+\draw[-{Latex[width=2mm]}, bend left=10] (8, -6) to (8, -2);
+% P -> G
+\draw[-{Latex[width=2mm]}, bend right=10] (2, -6) to (2, -4);
+\draw[-{Latex[width=2mm]}, bend right=10] (5, -6) to (5, -4);
+\draw[-{Latex[width=2mm]}, bend right=10] (8, -6) to (8, -4);
+% G -> P
+\draw[-{Latex[width=2mm]}, bend right=20] (1, -4) to (1, -6);
+\draw[-{Latex[width=2mm]}, bend right=20] (4, -4) to (4, -6);
+\draw[-{Latex[width=2mm]}, bend right=20] (7, -4) to (7, -6);
+
+% B -{Latex[width=2mm]} P
+\draw[-{Latex[width=2mm]}, bend right=35] (1, -3) to (1, -6);
+\draw[-{Latex[width=2mm]}, bend right=35] (4, -3) to (4, -6);
+\draw[-{Latex[width=2mm]}, bend right=35] (7, -3) to (7, -6);
+\end{tikzpicture}
+\end{frame}
+
 
 
 \begin{frame}{Repetition - walks and paths in static graphs}

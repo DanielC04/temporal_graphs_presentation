@@ -56,7 +56,7 @@
 - How does information, a disease, behaviour, ... spread over time in a network?
 - corona pandemics -> determine bottlenecks, who to vaccinate and accelerators
 - identify critical times and nodes
-- e.g. social media: understand spread of viral hashtag
+- e.g. social media: understWand spread of viral hashtag
 
 
 ## How to model temporal graphs
@@ -89,22 +89,36 @@
 - e.g. proper edge-labeling
 - looks trivial, but has deeper meaning!
 - no 2 edges appear at same time
-- exercise!!!
+ 
+### exercise notation
+- apply learned notation
+- solution: show
+- those who should know will know: it's the potsdam citynet (rough and inaccurate)
+- what does that mean? WHITEBOARD
+  t = 1 -> these nodes/edges visible
+  t = 2 -> other nodes/edges visible
+
+### Notation for convenience
+- explain notation
+- apply to previous exercise
 
 ### Transitivity of reachability in static graphs
+- on a different note: see what properties hold on temporal graphs
 - not my only proof, i swear :)
 - no rigeous proof, but rather intuition
 - please ignore that we haven't defined reachability exactly yet and use the analogue of reachability on static graphs
+- basically: go from one node to another with stricly increasing edge labels
 
 -> not transitive
 - what can we learn from this?
 - fundamental structural differences between static and temporal graphs
 - ideas and algorithms that rely on transitivity of reachability in static graphs might not work in temporal graphs
-- 
 
 ### Second notation
 - time edges
-- exercise!!!
+- on previous example:
+- $V = \{ C, H, B, P, M, G, W \}$
+- $A = \{ ((C, H), 1), ...   \}$
 
 ### static expansion of graphs
 - notion of storing separate graph per time step

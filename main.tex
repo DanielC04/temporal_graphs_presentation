@@ -10,6 +10,9 @@
 \usepackage{caption}
 \usepackage{subcaption}
 \usepackage{tikz}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{float}
 \usetikzlibrary{graphs, positioning}
 
 % Hyperlinks
@@ -259,27 +262,27 @@
 \node (M) at (5, -2) {M};
 
 % Define edges with timestamps using 'labelstyle'
-\draw[->, bend right=15] (C) to node[labelstyle, below] {1, 4} (H);
-\draw[->, bend right=15] (H) to node[labelstyle, above] {4, 7} (C);
-\draw[->, bend right=15] (B) to node[labelstyle, above] {3, 6} (H);
-\draw[->, bend right=15] (H) to node[labelstyle, above] {2, 5} (B);
-\draw[->, bend right=15] (B) to node[labelstyle, below] {3, 6} (G);
-\draw[->, bend right=15] (G) to node[labelstyle, above] {2, 5} (B);
-\draw[->, bend right=15] (W) to node[labelstyle, above] {1, 4} (G);
-\draw[->, bend right=15] (G) to node[labelstyle, above] {4, 7} (W);
-\draw[->, bend right=15] (B) to node[labelstyle, above] {1, 4, 7} (P);
-\draw[->, bend right=15] (P) to node[labelstyle, left] {2, 5, 8} (B);
-\draw[->, bend right=15] (G) to node[labelstyle, right] {1, 4, 7} (P);
-\draw[->, bend right=15] (P) to node[labelstyle, below] {2, 5, 8} (G);
-\draw[->, bend right=15] (H) to node[labelstyle] {1, 4, 7} (M);
-\draw[->, bend right=15] (M) to node[labelstyle] {2, 5, 8} (H);
-\draw[->, bend right=15] (W) to node[labelstyle] {1, 4, 7} (M);
-\draw[->, bend right=15] (M) to node[labelstyle] {2, 5, 8} (W);
+\visible<1, 2, 5>{\draw[->, bend right=15] (C) to node[labelstyle, below] {1, 4} (H)};
+\visible<1, 5, 8>{\draw[->, bend right=15] (H) to node[labelstyle, above] {4, 7} (C)};
+\visible<1, 4, 7>{\draw[->, bend right=15] (B) to node[labelstyle, above] {3, 6} (H)};
+\visible<1, 3, 6>{\draw[->, bend right=15] (H) to node[labelstyle, above] {2, 5} (B)};
+\visible<1, 4, 7>{\draw[->, bend right=15] (B) to node[labelstyle, below] {3, 6} (G)};
+\visible<1, 3, 6>{\draw[->, bend right=15] (G) to node[labelstyle, above] {2, 5} (B)};
+\visible<1, 2, 5>{\draw[->, bend right=15] (W) to node[labelstyle, above] {1, 4} (G)};
+\visible<1, 5, 8>{\draw[->, bend right=15] (G) to node[labelstyle, above] {4, 7} (W)};
+\visible<1, 5, 8>{\draw[->, bend right=15] (B) to node[labelstyle, above] {1, 4, 7} (P)};
+\visible<1, 3, 6, 9>{\draw[->, bend right=15] (P) to node[labelstyle, left] {2, 5, 8} (B)};
+\visible<1, 2, 5, 8>{\draw[->, bend right=15] (G) to node[labelstyle, right] {1, 4, 7} (P)};
+\visible<1, 3, 6, 9>{\draw[->, bend right=15] (P) to node[labelstyle, below] {2, 5, 8} (G)};
+\visible<1, 2, 5, 8>{\draw[->, bend right=15] (H) to node[labelstyle] {1, 4, 7} (M)};
+\visible<1, 3, 6, 9>{\draw[->, bend right=15] (M) to node[labelstyle] {2, 5, 8} (H)};
+\visible<1, 2, 5, 8>{\draw[->, bend right=15] (W) to node[labelstyle] {1, 4, 7} (M)};
+\visible<1, 3, 6, 9>{\draw[->, bend right=15] (M) to node[labelstyle] {2, 5, 8} (W)};
 \end{tikzpicture}
 \end{frame}
 
 \againframe{potsdam_map}
-\againframe{potsdam_city_graph}
+\againframe<1>{potsdam_city_graph}
 
 \begin{frame}{Notation for convenience $\rightarrow$ \cite[p. 243ff]{Michail2015}}
 \begin{itemize}
@@ -479,6 +482,12 @@ strictly increasing edge-labels.
   }
 \end{frame}
 
+\begin{frame}{Exercise: Journeys}
+  \large \centering
+  What is the foremost journey from C to P in the Potsdam-Map temporal graph from time $2$?\\
+\end{frame}
+\againframe<1>{potsdam_city_graph}
+
 \begin{frame}{Journeys}
 	\begin{tcolorbox}[title=Definition: Temporal distance]
     The \textbf{temporal distance} from a node $u$ to at time $t$ to a node $v$ is defined as the duration of a foremost journey from $u$ to $v$ that departs at time $t$.
@@ -490,11 +499,17 @@ strictly increasing edge-labels.
   }
 \end{frame}
 
+\begin{frame}{Exercise: Journeys}
+  \large \centering
+  Find the temporal diameter of the Potsdam-Map temporal graph.\\
+\end{frame}
+\againframe<1>{potsdam_city_graph}
 
 
-\begin{frame}{Computing foremost journeys - Problem formulation}
+\begin{frame}[label=foremost_journey_problem_formulation]{Computing foremost journeys - Problem formulation}
   \begin{center}
-    Given a source node $s \in V$ and a start time $t_{start}$ compute the foremost $s-w$ journey for all $w \in V \text{\textbackslash{}} \{ s \}$
+    Given a source node $s \in V$ and a start time $t_{start}$ compute the foremost $s-w$ journey for all $w \in V \text{\textbackslash{}} \{ s \}$. \\[2ex]
+    Brainstorm ideas for an algorithm to solve this problem with a partner.
   \end{center}
 \end{frame}
 
@@ -514,19 +529,54 @@ strictly increasing edge-labels.
     \includegraphics[width=\linewidth]{media/online_algo.png}
   \end{minipage}
   \sourcefootnote{https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbpwyZnBM48yDEHLT9Sww1J8AJrgs4lj-VLi2EkxpIoKMeI6-stF-R9uAsLl5K4gXFBts&usqp=CAU}
+
 \end{frame}
+\againframe{foremost_journey_problem_formulation}
 
 \begin{frame}{Computing foremost journeys - Algorithm}
-  \includegraphics[width=\linewidth]{media/foremost_journey_algorithm.png}
-  \cite[page 724]{PathProblems}
+\begin{algorithm}[H]
+\caption{Computing earliest-arrival time}
+\begin{algorithmic}[1]
+\footnotesize
+\Require A temporal graph $G = (V, E)$ in its edge stream representation, source vertex $x$, time interval $[t_\alpha, t_\omega]$
+\Ensure The earliest-arrival time from $x$ to every vertex $v \in V$ within $[t_\alpha, t_\omega]$
+
+\State Initialize $t[x] = t_\alpha$, and $t[v] = \infty$ for all $v \in V \setminus \{x\}$
+\ForAll{incoming edge $e = (u, v, t)$ in the edge stream}
+    \If{$t + 1 \leq t_\omega$ and $t \geq t[u]$}
+        \If{$t + 1 < t[v]$}
+            \State $t[v] \gets t + 1$
+        \EndIf
+    \ElsIf{$t \geq t_\omega$}
+        \State \textbf{break} \Comment{Go to Line 11}
+    \EndIf
+\EndFor
+\State \Return $t[v]$ for each $v \in V$
+\end{algorithmic}
+\end{algorithm}
+\cite{PathProblems}
 \end{frame}
 
 \begin{frame}{Computing foremost journeys - Proof of correctness}
 
+  \begin{quote}
+    Let $\mathbb{P}$ be the set of earliest-arrival paths from $x$ to a vertex $v_k$ within the time interval $[t_\alpha, t_\omega ]$. If $\mathbb{P} \not = \emptyset$ then there exists $P = (x, v_1, v_2, ..., v_k) \in \mathbb{P}$ such that every prefix-subpath, $P_i = (x, v_1, v_2, ..., v_i)$, is an earliest-arrival path from $x$ to $v_i$ within $[t_\alpha, t_\omega ]$, for $1 \leq i \leq k$.
+  \end{quote} \\[3ex]
+  \visible<2->{
+    \begin{quote}
+      For any vertex $v \in V$, if the earliest-arrival path from $x$ to $v$ within the time interval $[t_\alpha, t_\omega ]$ exists, then $t[v]$ returned by the Algorithm is the corresponding earliest-arrival time; otherwise, $t[v] = \infty$.
+    \end{quote}
+  }
 
 \end{frame}
-\begin{frame}{Computing foremost journeys - Running time}
 
+\begin{frame}{Other metrics to optimize}
+  \begin{itemize}
+    \item latest departure time
+    \item fastest path
+    \item shortest path
+    \item \dots
+  \end{itemize}
 \end{frame}
 
 \begin{frame}{Reachability}
@@ -627,6 +677,19 @@ strictly increasing edge-labels.
   \end{center}
 \end{frame}
 
+\begin{frame}{Exercise}
+  \centering \large
+  Discuss reasons why this strategy is so effective for eliminating the spread of a disease with a partner. \\
+  \hfill \tiny 3 min
+\end{frame}
+\begin{frame}{Exercise}
+  \begin{itemize}
+    \item probability $p$ that node $a$ is infected is roughly proportional to $deg(a)$
+    \item number of infected nodes is roughly proportional to $deg(a)$
+    \item[$\rightarrow$] 'risk' is roughly proportional to $deg^2(a)$
+  \end{itemize}
+\end{frame}
+
 \begin{frame}{Modelling dissemination processes}
   \begin{itemize}
     \item Nodes represent individuals/groups/organizations
@@ -663,9 +726,9 @@ strictly increasing edge-labels.
 
 \begin{frame}{The infection process}
   \centering
-  \includegraphics[width=0.6\linewidth]{media/infection_process_a.png} 
+  \includegraphics[width=0.7\linewidth]{media/infection_process_a.png} 
 
-  \includegraphics[width=0.6\linewidth]{media/infection_process_b.png} \\
+  \includegraphics[width=0.7\linewidth]{media/infection_process_b.png} \\
   \cite{Lee_2012}
 \end{frame}
 
@@ -712,11 +775,13 @@ strictly increasing edge-labels.
 
 
 \section{Teasers}
-\begin{frame}{Centrality of nodes in a temporal graph}
-
-\end{frame}
-
-\begin{frame}{Temporal Graph Neural Networks}
+\begin{frame}{Further interesting problems on temporal graphs}
+  \begin{itemize}
+    \item Centrality of nodes in a temporal graph
+    \item temporal graph metrics
+    \item temporal connectivity
+    \item Temporal Graph Neural Networks
+  \end{itemize}
 \end{frame}
 
 \begin{frame}[allowframebreaks]{Sources}
